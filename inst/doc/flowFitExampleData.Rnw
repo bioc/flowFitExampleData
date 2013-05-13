@@ -1,0 +1,88 @@
+%\VignetteIndexEntry{flowFitExampleData: example data for the beadarray package}
+%\VignetteKeywords{flowFit}
+%\VignettePackage{flowFitExampleData}
+
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[authoryear,round]{natbib}
+
+\textwidth=6.2in
+\textheight=8.5in
+\parskip=.3cm
+\oddsidemargin=.1in
+\evensidemargin=.1in
+\headheight=-.3in
+
+\newcommand{\scscst}{\scriptscriptstyle}
+\newcommand{\scst}{\scriptstyle}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+
+\author{Davide Rambaldi}
+\begin{document}
+\title{Example data for use with the flowFit package}
+
+\maketitle
+\tableofcontents
+
+<<echo=FALSE, eval=TRUE>>=
+options(width=70)
+@
+
+
+\section{Data Introduction}\label{sec:intro}
+
+This package provides two lightweight datasets for those wishing to try out the examples within the \Rpackage{flowFIt} package.
+
+The package contains two datasets:
+
+\begin{enumerate}
+  \item PKH26data
+  \item QuahAndParish
+\end{enumerate}
+
+
+
+\section{Loading the data}\label{sec:load}
+
+The example datasets can be loaded using the \Rfunction{data} function.
+
+<<Loading, echo=TRUE, resuls=verbatim>>==
+library(flowFitExampleData)
+data(PKH26data)
+PKH26data
+
+data(QuahAndParish)
+QuahAndParish
+
+@
+
+\section{Data creation}
+
+The following commands were used to create the QuahAndParish data included with this package.
+
+
+<<eval=FALSE>>=
+
+require(flowCore)
+
+flowData <- read.flowSet(path = ".", phenoData = "annotationfig2.txt", transformation=FALSE)
+
+wf <- workFlow(flowData, name = "FACSCANTO LOG workflow")
+
+trunTrans <- truncateTransform(transformationId="truncate", a=1)
+tr <- transformList(c("<FITC-A>","<PE-A>", "<PE-Cy5-A>", "<Alexa Fluor 405-A>", "<Alexa Fluor 430-A>", "<APC-A>", "<APC-Cy7-A>"), trunTrans, transformationId = "truncate")
+add(wf,tr)
+
+logTrans <- logTransform(transformationId="log10-transformation", logbase=10, r=1, d=1)
+tf <- transformList(c("<FITC-A>","<PE-A>", "<PE-Cy5-A>", "<Alexa Fluor 405-A>", "<Alexa Fluor 430-A>", "<APC-A>", "<APC-Cy7-A>"), logTrans, transformationId = "log")
+add(wf, tf, parent="truncate")
+
+mDataLog <- Data(wf[["log"]])
+
+@
+
+\end{document}
