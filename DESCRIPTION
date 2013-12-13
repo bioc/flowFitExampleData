@@ -1,7 +1,7 @@
 Package: flowFitExampleData
 Type: Package
 Title: Example data for the flowFit package
-Version: 0.99.2
+Version: 0.99.3
 Date: 2013-03-04
 Author: davide Rambaldi
 Maintainer: Davide Rambaldi <davide.rambaldi@gmail.com>
