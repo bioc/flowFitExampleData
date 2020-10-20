@@ -1,7 +1,7 @@
 Package: flowFitExampleData
 Type: Package
 Title: Example data for the flowFit package
-Version: 1.25.0
+Version: 1.25.1
 Date: 2013-03-04
 Author: davide Rambaldi
 Maintainer: Davide Rambaldi <davide.rambaldi@gmail.com>
@@ -10,3 +10,4 @@ License: Artistic-2.0
 biocViews: FlowCytometryData
 Depends: R (>= 2.12.2), flowCore
 Imports: methods
+PackageStatus: Deprecated
